@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — protocols that record no token, ranked</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="dot"></span><h1>Token Radar</h1></div>
+  <p class="tag">Every protocol below <strong>records no token</strong> in DefiLlama — ranked by what its token would be worth if the protocol's record stayed as it is. Not a prediction that a token comes, or when.</p>
+  <div class="stats" id="stats"></div>
+</header>
+
+<section class="controls" aria-label="Filters">
+  <input id="q" type="search" placeholder="Search name or slug…" autocomplete="off">
+  <select id="category" aria-label="Category"><option value="">All categories</option></select>
+  <select id="chain" aria-label="Chain"><option value="">All chains</option></select>
+  <select id="minTvl" aria-label="Minimum TVL">
+    <option value="0">Any TVL</option>
+    <option value="50000000">TVL ≥ $50M</option>
+    <option value="100000000">TVL ≥ $100M</option>
+    <option value="500000000">TVL ≥ $500M</option>
+    <option value="1000000000">TVL ≥ $1B</option>
+  </select>
+  <select id="sort" aria-label="Sort by">
+    <option value="rank">Sort: implied value</option>
+    <option value="tvl">Sort: TVL</option>
+    <option value="change7d">Sort: 7-day growth</option>
+    <option value="ageDays">Sort: longest running</option>
+  </select>
+  <label class="check"><input id="watchOnly" type="checkbox"> Watchlist only</label>
+  <span class="count" id="count"></span>
+</section>
+
+<main>
+  <section class="board-wrap">
+    <table id="board">
+      <thead><tr>
+        <th data-k="rank">#</th><th data-k="name">Protocol</th><th data-k="category">Category</th>
+        <th data-k="chains">Chains</th><th data-k="tvl">TVL</th><th data-k="change7d">7d</th>
+        <th data-k="ageDays">Age</th><th data-k="implied">Implied value</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="empty" id="empty" hidden>No protocol matches this filter. Loosen it and try again.</p>
+  </section>
+
+  <aside class="detail" id="detail" hidden>
+    <button class="close" id="closeDetail" aria-label="Close detail">×</button>
+    <div id="detailBody"></div>
+  </aside>
+</main>
+
+<footer>
+  <p><strong>How the value is built.</strong> Implied value = TVL × 0.42 × growth × age × chains × category.
+  Growth uses the 7-day TVL change (clamped −30%…+100%); age is days listed with no token (capped at 1,500 days);
+  chains is 1 + 0.08·ln(1 + chain count); category discounts venues unlikely to need a token (CEX 0.70, bridges 0.80)
+  and favours money markets and exchanges (1.10). Every factor is shown on each protocol's detail view.</p>
+  <p>Snapshot <span id="asOf"></span> · Source: <span id="source"></span> · Floor $50M watchlist.
+  “Records no token” means DefiLlama carries no gecko_id and no symbol — a record, never proof the protocol has no token.
+  Nothing here is investment advice; farm at your own risk and never pay for a “guaranteed” allocation.</p>
+</footer>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
